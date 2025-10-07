@@ -1,0 +1,36 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #e3a1ff, #a5d8ff);
+}
+
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 300;
+    -fx-text-fill: white;
+}
+
+.icon {
+    -fx-font-size: 16px;
+}
+
+.input-field {
+    -fx-pref-width: 250px;
+    -fx-background-radius: 0;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.6);
+}
+
+.login-button {
+    -fx-background-color: #2f4c6e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 5;
+}
+
+.login-button:hover {
+    -fx-background-color: #3f5c8a;
+}

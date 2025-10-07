@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.centromedico.controllers.CitasController"
+      spacing="20"
+      style="-fx-background-color: #f0f0f0; -fx-padding: 20;">
+      
+    <!-- Panel de número y fecha de cita -->
+    <HBox style="-fx-background-color: #D3D3D3; -fx-background-radius: 20; -fx-padding: 10;" 
+          alignment="CENTER_LEFT" spacing="15">
+        <Label text="Numero de Cita" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="numeroCitaField" prefWidth="100"/>
+        
+        <Label text="Fecha Cita" style="-fx-font-weight: bold; -fx-padding: 0 0 0 20;"/>
+        <DatePicker fx:id="fechaCitaDatePicker" prefWidth="150"/>
+        <TextField fx:id="horaCitaField" promptText="HH:mm" prefWidth="70"/>
+        <Button fx:id="seleccionarFechaBtn" text="..." prefWidth="30" onAction="#seleccionarFecha"/>
+    </HBox>
+    
+    <!-- Panel de datos del paciente -->
+    <HBox style="-fx-background-color: #D3D3D3; -fx-background-radius: 20; -fx-padding: 15;">
+        <VBox spacing="15" HBox.hgrow="ALWAYS">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="DNI" style="-fx-font-weight: bold;" prefWidth="120"/>
+                <TextField fx:id="dniField" prefWidth="150"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="verCitasBtn" text="Ver citas Paciente" 
+                        style="-fx-background-color: #C0C0C0; -fx-background-radius: 10;"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nombre Paciente" style="-fx-font-weight: bold;" prefWidth="120"/>
+                <TextField fx:id="nombreField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Direccion" style="-fx-font-weight: bold;" prefWidth="120"/>
+                <TextField fx:id="direccionField" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Telefono" style="-fx-font-weight: bold;" prefWidth="120"/>
+                <TextField fx:id="telefonoField" prefWidth="150"/>
+            </HBox>
+        </VBox>
+    </HBox>
+    
+    <!-- Panel de especialidad -->
+    <HBox style="-fx-background-color: #D3D3D3; -fx-background-radius: 20; -fx-padding: 15;"
+          alignment="CENTER_LEFT" spacing="20">
+        <Label text="Especilidad" style="-fx-font-weight: bold;" prefWidth="100"/>
+        <ComboBox fx:id="especialidadCombo" prefWidth="150"/>
+    </HBox>
+    
+    <!-- Sección de citas del paciente -->
+    <Label text="Citas del Paciente" textFill="RED" style="-fx-font-weight: bold;" alignment="CENTER" maxWidth="Infinity"/>
+    
+    <!-- Tabla de citas -->
+    <TableView fx:id="citasTableView" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="numCitaColumn" text="Nº Cita" prefWidth="100"/>
+            <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="150"/>
+            <TableColumn fx:id="especialidadColumn" text="Especialidad" prefWidth="150"/>
+        </columns>
+        <placeholder>
+            <Label text="Tabla sin contenido"/>
+        </placeholder>
+    </TableView>
+    
+    <!-- Botones inferiores -->
+    <HBox alignment="CENTER" spacing="20">
+        <Button fx:id="nuevaCitaBtn" text="Nueva Cita" 
+                style="-fx-background-color: #C0C0C0; -fx-background-radius: 10; -fx-padding: 8 30;"/>
+        <Button fx:id="borrarCitaBtn" text="Borrar Cita"
+                style="-fx-background-color: #C0C0C0; -fx-background-radius: 10; -fx-padding: 8 30;"/>
+        <Button fx:id="modificarCitaBtn" text="Modificar Cita"
+                style="-fx-background-color: #C0C0C0; -fx-background-radius: 10; -fx-padding: 8 30;"/>
+    </HBox>
+    
+</VBox>

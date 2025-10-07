@@ -44,3 +44,9 @@ INSERT INTO Paciente (dni, passwd, nombre, direccion, telefono) VALUES
 ('88990011R', SHA2('pass888', 256), 'Monica Navarro', 'Avenida Paz 80', '600889900'),
 ('99001122S', SHA2('pass999', 256), 'Fernando Castro', 'Plaza Sol 11', '600990011'),
 ('00112233T', SHA2('pass000', 256), 'Gabriela Ortega', 'Calle Luz 3', '600001122');
+
+INSERT INTO especialidad (nombreEspecialidad) VALUES 
+('Pediatría'),
+('Cirugía'),
+('Traumatología'),
+('Psiquiatría');

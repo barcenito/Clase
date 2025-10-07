@@ -18,6 +18,22 @@ public class Cita {
 		this.idEspecialidad = idEspecialidad;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setFecha(Timestamp fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setIdPaciente(int idPaciente) {
+		this.idPaciente = idPaciente;
+	}
+
+	public void setIdEspecialidad(int idEspecialidad) {
+		this.idEspecialidad = idEspecialidad;
+	}
+
 	public int getId() {
 		return id;
 	}

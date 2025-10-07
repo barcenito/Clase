@@ -5,8 +5,9 @@ module org.example.centromedico {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires java.sql;
+	requires mysql.connector.java;
 
-    opens org.example.centromedico to javafx.fxml;
+	opens org.example.centromedico to javafx.fxml;
     exports org.example.centromedico;
     exports org.example.centromedico.controllers;
     opens org.example.centromedico.controllers to javafx.fxml;
