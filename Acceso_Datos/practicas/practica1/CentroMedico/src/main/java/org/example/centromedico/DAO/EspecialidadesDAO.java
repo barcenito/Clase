@@ -18,6 +18,9 @@ public class EspecialidadesDAO {
     public void connect() throws ClassNotFoundException, SQLException, IOException {
         Properties configuration = new Properties();
         FileInputStream fileInput = new FileInputStream("src/main/resources/configuration/database.properties");
+        if(fileInput == null){
+            System.out.println("qe mierdas pasa con esta puta mierda citas");
+        }
 		configuration.load(fileInput);
         String host = configuration.getProperty("host");
         String port = configuration.getProperty("port");

@@ -1,9 +1,6 @@
 package org.example.centromedico.controllers;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.example.centromedico.DAO.PacientesDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,13 +25,15 @@ public class LoginController {
 		try{
 			pacientesDAO.connect();
 		} catch (SQLException sqle) {
-			this.errorOutput.setText("Error al conectar con la base de datos");
+			mostrarError("Error al conectar con la base de datos");
 		} catch (ClassNotFoundException cnfe) {
-			this.errorOutput.setText("Error al iniciar la aplicación");
+			mostrarError("Error al iniciar la aplicación");
 		} catch (IOException ioe) {
-			this.errorOutput.setText("Error al cargar la configuración");
+			mostrarError("Error al cargar la configuración");
+			System.out.println(ioe);
+			System.exit(0);
 		}
-		System.out.println("CONEXION REALIZADA");
+		/*System.out.println("CONEXION REALIZADA");*/
 	}
 	public void onLogin(){
 
@@ -73,5 +72,12 @@ public class LoginController {
 			errorOutput.setText("Error al consultar la base de datos");
 			ex.printStackTrace();
 		}
+	}
+	private void mostrarError(String mensaje) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		alert.setContentText(mensaje);
+		alert.showAndWait();
 	}
 }

@@ -4,6 +4,7 @@ import org.example.centromedico.models.Paciente;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,11 @@ public class PacientesDAO {
 
 	public void connect() throws ClassNotFoundException, SQLException, IOException {
 		Properties configuration = new Properties();
-		FileInputStream fileInput = new FileInputStream("src/main/resources/configuration/database.properties");
+		System.out.println(System.getProperty("user.dir"));
+		InputStream fileInput = R.getProperties("\\database.properties");
+		if (fileInput == null) {
+            throw new IOException("No se pudo encontrar el archivo database.properties en resources/configuration/");
+        }
 		configuration.load(fileInput);
 		String host = configuration.getProperty("host");
 		String port = configuration.getProperty("port");
@@ -33,7 +38,7 @@ public class PacientesDAO {
 
 	public List<Paciente> getPacientes() throws SQLException {
 		List<Paciente> pacientes = new ArrayList<>();
-		String sql = "FROM pacientes SELECT *";
+		String sql = "SELECT * FROM paciente";
 		PreparedStatement stm = this.connection.prepareStatement(sql);
 		ResultSet resultado = stm.executeQuery();
 		while(resultado.next()){
