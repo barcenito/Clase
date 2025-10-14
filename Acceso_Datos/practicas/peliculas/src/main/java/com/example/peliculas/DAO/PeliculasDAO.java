@@ -24,8 +24,7 @@ public class PeliculasDAO {
 	public List<Pelicula> getPeliculas(String filePath){
 		File file = new File(filePath);
 		try {
-			this.peliculas = mapper.readValue(file, new TypeReference<List<Pelicula>>() {
-			});
+			this.peliculas = mapper.readValue(file, new TypeReference<List<Pelicula>>(){});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
