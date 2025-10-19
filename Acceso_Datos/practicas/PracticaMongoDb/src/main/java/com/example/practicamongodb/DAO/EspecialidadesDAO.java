@@ -1,85 +1,103 @@
 package com.example.practicamongodb.DAO;
 
-import org.example.centromedico.models.Especialidad;
+import com.example.practicamongodb.Models.ConexionMongoDB;
+import com.example.practicamongodb.Models.Especialidad;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.InsertOneResult;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class EspecialidadesDAO {
-    private Connection connection;
+    private MongoClient mongoClient;
+    private MongoDatabase database;
+    private MongoCollection<Document> especialidadesCollection;
 
     public EspecialidadesDAO() {
     }
 
-    public void connect() throws ClassNotFoundException, SQLException, IOException {
-        Properties configuration = new Properties();
-        FileInputStream fileInput = new FileInputStream("src/main/resources/configuration/database.properties");
-        if(fileInput == null){
-            System.out.println("qe mierdas pasa con esta puta mierda citas");
+    public void connect() throws IOException {
+        this.mongoClient = ConexionMongoDB.conectar();
+        if (this.mongoClient != null) {
+            this.database = mongoClient.getDatabase("CentroMedico");
+            this.especialidadesCollection = database.getCollection("especialidades");
+        } else {
+            throw new IOException("No se pudo conectar a MongoDB");
         }
-		configuration.load(fileInput);
-        String host = configuration.getProperty("host");
-        String port = configuration.getProperty("port");
-        String name = configuration.getProperty("name");
-        String username = configuration.getProperty("username");
-        String password = configuration.getProperty("password");
-
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        this.connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
-                username, password);
     }
 
-    public List<Especialidad> getEspecialidades() throws SQLException {
-        List<Especialidad> especialidades = new ArrayList<>();
-        String sql = "SELECT * FROM especialidad";
-        PreparedStatement stm = this.connection.prepareStatement(sql);
-        ResultSet resultado = stm.executeQuery();
-        while (resultado.next()) {
-            Especialidad especialidad = new Especialidad();
-            especialidad.setId(resultado.getInt("id"));
-            especialidad.setNombreEspecialidad(resultado.getString("nombreEspecialidad"));
-            especialidades.add(especialidad);
+    public void disconnect() {
+        if (this.mongoClient != null) {
+            ConexionMongoDB.desconectar(this.mongoClient);
         }
+    }
+
+    public List<Especialidad> getEspecialidades() {
+        List<Especialidad> especialidades = new ArrayList<>();
+        MongoCursor<Document> cursor = especialidadesCollection.find().iterator();
+
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Especialidad especialidad = documentToEspecialidad(doc);
+                especialidades.add(especialidad);
+            }
+        } finally {
+            cursor.close();
+        }
+
         return especialidades;
     }
 
-    public Especialidad getEspecialidad(int idEspecialidad) throws SQLException {
-        Especialidad nuevaEspecialidad = null;
-        String sql = "SELECT * FROM especialidad WHERE id=?";
-        PreparedStatement smt = this.connection.prepareStatement(sql);
-        smt.setInt(1, idEspecialidad);
-        ResultSet result = smt.executeQuery();
-        if (result.next()) {
-            nuevaEspecialidad = new Especialidad();
-            nuevaEspecialidad.setId(result.getInt("id"));
-            nuevaEspecialidad.setNombreEspecialidad(result.getString("nombreEspecialidad"));
+    public Especialidad getEspecialidad(int idEspecialidad) {
+        Document doc = especialidadesCollection.find(Filters.eq("_id", idEspecialidad)).first();
+        if (doc != null) {
+            return documentToEspecialidad(doc);
         }
-        return nuevaEspecialidad;
+        return null;
     }
 
-    public void updateEspecialidad(Especialidad especialidad) throws SQLException {
-        String sql = "UPDATE especialidad SET nombreEspecialidad = ? WHERE id = ?";
-        PreparedStatement smt = this.connection.prepareStatement(sql);
-        smt.setString(1, especialidad.getNombreEspecialidad());
-        smt.setInt(2, especialidad.getId());
-        smt.executeUpdate();
+    public void updateEspecialidad(Especialidad especialidad) {
+        Bson filter = Filters.eq("_id", especialidad.getId());
+        Bson update = Updates.set("nombreEspecialidad", especialidad.getNombreEspecialidad());
+        especialidadesCollection.updateOne(filter, update);
     }
 
-    public void insertEspecialidad(Especialidad especialidad) throws SQLException {
-        String sql = "INSERT INTO especialidad (nombreEspecialidad) VALUES (?)";
-        PreparedStatement smt = this.connection.prepareStatement(sql);
-        smt.setString(1, especialidad.getNombreEspecialidad());
-        smt.executeUpdate();
+    public void insertEspecialidad(Especialidad especialidad) {
+        // Generar un nuevo ID si no tiene uno asignado
+        Document maxIdDoc = especialidadesCollection.find().sort(new Document("_id", -1)).first();
+        int nextId = 1;
+        if (maxIdDoc != null) {
+            nextId = maxIdDoc.getInteger("_id", 0) + 1;
+        }
+
+        Document especialidadDoc = new Document()
+                .append("_id", nextId)
+                .append("nombreEspecialidad", especialidad.getNombreEspecialidad());
+
+        InsertOneResult result = especialidadesCollection.insertOne(especialidadDoc);
+        if (result.wasAcknowledged()) {
+            especialidad.setId(nextId);
+        }
     }
 
-    public void deleteEspecialidad(int idEspecialidad) throws SQLException {
-        String sql = "DELETE FROM especialidad WHERE id = ?";
-        PreparedStatement smt = this.connection.prepareStatement(sql);
-        smt.setInt(1, idEspecialidad);
-        smt.executeUpdate();
+    public void deleteEspecialidad(int idEspecialidad) {
+        especialidadesCollection.deleteOne(Filters.eq("_id", idEspecialidad));
+    }
+
+    private Especialidad documentToEspecialidad(Document doc) {
+        Especialidad especialidad = new Especialidad();
+        especialidad.setId(doc.getInteger("_id"));
+        especialidad.setNombreEspecialidad(doc.getString("nombreEspecialidad"));
+        return especialidad;
     }
 }

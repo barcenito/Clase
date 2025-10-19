@@ -1,17 +1,16 @@
 package com.example.practicamongodb.Models;
 
-import java.sql.Timestamp;
 
 public class Cita {
 	protected int id;
-	protected Timestamp fecha;
+	protected String fecha;
 	protected int idPaciente;
 	protected int idEspecialidad;
 
 	public Cita() {
 	}
 
-	public Cita(int id, Timestamp fecha, int idPaciente, int idEspecialidad) {
+	public Cita(int id, String fecha, int idPaciente, int idEspecialidad) {
 		this.id = id;
 		this.fecha = fecha;
 		this.idPaciente = idPaciente;
@@ -22,7 +21,7 @@ public class Cita {
 		this.id = id;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -38,7 +37,7 @@ public class Cita {
 		return id;
 	}
 
-	public Timestamp getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 

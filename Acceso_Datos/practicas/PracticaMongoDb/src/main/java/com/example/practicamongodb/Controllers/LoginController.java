@@ -1,15 +1,16 @@
 package com.example.practicamongodb.Controllers;
 
+import com.example.practicamongodb.DAO.PacientesDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.example.centromedico.DAO.PacientesDAO;
-import org.example.centromedico.models.Paciente;
-import org.example.centromedico.util.HashUtil;
+
+import com.example.practicamongodb.Models.Paciente;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 
 public class LoginController {
 	public TextField userField;
@@ -23,7 +24,7 @@ public class LoginController {
 		pacientesDAO = new PacientesDAO();
 		try{
 			pacientesDAO.connect();
-		} catch (SQLException sqle) {
+		} catch () {
 			mostrarError("Error al conectar con la base de datos");
 		} catch (ClassNotFoundException cnfe) {
 			mostrarError("Error al iniciar la aplicación");

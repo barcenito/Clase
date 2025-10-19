@@ -1,83 +1,111 @@
 package com.example.practicamongodb.DAO;
 
-import org.example.centromedico.models.Paciente;
-import org.example.centromedico.util.R;
+import com.example.practicamongodb.Models.ConexionMongoDB;
+import com.example.practicamongodb.Models.Paciente;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class PacientesDAO {
-	private Connection connection;
+    private MongoClient mongoClient;
+    private MongoDatabase database;
+    private MongoCollection<Document> pacientesCollection;
 
-	public PacientesDAO() {
-	}
-
-	public void connect() throws ClassNotFoundException, SQLException, IOException {
-		Properties configuration = new Properties();
-		System.out.println(System.getProperty("user.dir"));
-		InputStream fileInput = R.getProperties("\\database.properties");
-		if (fileInput == null) {
-            throw new IOException("No se pudo encontrar el archivo database.properties en resources/configuration/");
-        }
-		configuration.load(fileInput);
-		String host = configuration.getProperty("host");
-		String port = configuration.getProperty("port");
-		String name = configuration.getProperty("name");
-		String username = configuration.getProperty("username");
-		String password = configuration.getProperty("password");
-
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		this.connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + name + "?serverTimezone=UTC",
-				username, password);
-	}
-
-	public List<Paciente> getPacientes() throws SQLException {
-		List<Paciente> pacientes = new ArrayList<>();
-		String sql = "SELECT * FROM paciente";
-		PreparedStatement stm = this.connection.prepareStatement(sql);
-		ResultSet resultado = stm.executeQuery();
-		while(resultado.next()){
-			Paciente paciente = new Paciente();
-			paciente.setId(resultado.getInt("id"));
-			paciente.setDni(resultado.getString("dni"));
-			paciente.setPasswd(resultado.getString("passwd"));
-			paciente.setNombre(resultado.getString("nombre"));
-			paciente.setTelefono(resultado.getInt("telefono"));
-			pacientes.add(paciente);
-		}
-		return pacientes;
-	}
-	public Paciente getPaciente(int idPaciente) throws SQLException{
-		Paciente nuevoPaciente = null;
-		String sql = "SELECT * FROM paciente where id=?";
-		PreparedStatement smt = this.connection.prepareStatement(sql);
-		smt.setInt(1,idPaciente);
-		ResultSet result = smt.executeQuery();
-		if (result.next()) {
-			nuevoPaciente = new Paciente();
-			nuevoPaciente.setId(result.getInt("id"));
-			nuevoPaciente.setDni(result.getString("dni"));
-			nuevoPaciente.setPasswd(result.getString("passwd"));
-			nuevoPaciente.setNombre(result.getString("nombre"));
-			nuevoPaciente.setDireccion(result.getString("direccion"));
-			nuevoPaciente.setTelefono(result.getInt("telefono"));
+    public PacientesDAO() {
     }
-		return nuevoPaciente;
-	}
 
-	public void updatePaciente(Paciente paciente) throws SQLException {
-		String sql = "UPDATE paciente SET dni = ?, passwd = ? , nombre = ?, direccion = ?, telefono = ?  where id = ? ";
-		PreparedStatement smt = this.connection.prepareStatement(sql);
-		smt.setString(1,paciente.getDni());
-		smt.setString(2,paciente.getPasswd());
-		smt.setString(3,paciente.getNombre());
-		smt.setString(4,paciente.getDireccion());
-		smt.setInt(5,paciente.getTelefono());
-		smt.setInt(6,paciente.getId());
-		smt.executeUpdate();
-	}
+    public void connect() throws IOException {
+        this.mongoClient = ConexionMongoDB.conectar();
+        if (this.mongoClient != null) {
+            this.database = mongoClient.getDatabase("CentroMedico");
+            this.pacientesCollection = database.getCollection("pacientes");
+        } else {
+            throw new IOException("No se pudo conectar a MongoDB");
+        }
+    }
+
+    public void disconnect() {
+        if (this.mongoClient != null) {
+            ConexionMongoDB.desconectar(this.mongoClient);
+        }
+    }
+
+    public List<Paciente> getPacientes() {
+        List<Paciente> pacientes = new ArrayList<>();
+        MongoCursor<Document> cursor = pacientesCollection.find().iterator();
+
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Paciente paciente = documentToPaciente(doc);
+                pacientes.add(paciente);
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return pacientes;
+    }
+
+    public Paciente getPaciente(int idPaciente) {
+        Document doc = pacientesCollection.find(Filters.eq("_id", idPaciente)).first();
+        if (doc != null) {
+            return documentToPaciente(doc);
+        }
+        return null;
+    }
+
+    public void updatePaciente(Paciente paciente) {
+        Bson filter = Filters.eq("_id", paciente.getId());
+        Bson updates = Updates.combine(
+                Updates.set("dni", paciente.getDni()),
+                Updates.set("passwd", paciente.getPasswd()),
+                Updates.set("nombre", paciente.getNombre()),
+                Updates.set("direccion", paciente.getDireccion()),
+                Updates.set("telefono", paciente.getTelefono())
+        );
+
+        pacientesCollection.updateOne(filter, updates);
+    }
+
+    private Paciente documentToPaciente(Document doc) {
+        Paciente paciente = new Paciente();
+        paciente.setId(doc.getInteger("_id"));
+        paciente.setDni(doc.getString("dni"));
+        paciente.setPasswd(doc.getString("passwd"));
+        paciente.setNombre(doc.getString("nombre"));
+        paciente.setDireccion(doc.getString("direccion"));
+        paciente.setTelefono(doc.getInteger("telefono"));
+        return paciente;
+    }
+
+    // Método adicional para insertar un nuevo paciente
+    public void insertPaciente(Paciente paciente) {
+        // Generar un nuevo ID si no tiene uno asignado
+        Document maxIdDoc = pacientesCollection.find().sort(new Document("_id", -1)).first();
+        int nextId = 1;
+        if (maxIdDoc != null) {
+            nextId = maxIdDoc.getInteger("_id", 0) + 1;
+        }
+
+        Document pacienteDoc = new Document()
+                .append("_id", nextId)
+                .append("dni", paciente.getDni())
+                .append("passwd", paciente.getPasswd())
+                .append("nombre", paciente.getNombre())
+                .append("direccion", paciente.getDireccion())
+                .append("telefono", paciente.getTelefono());
+
+        pacientesCollection.insertOne(pacienteDoc);
+        paciente.setId(nextId);
+    }
 }

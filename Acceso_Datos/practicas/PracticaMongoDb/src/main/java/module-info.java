@@ -10,6 +10,7 @@ module com.example.practicamongodb {
 
     // Otros módulos que puedas necesitar
     requires com.google.gson;
+    requires java.sql;
 
 
     opens com.example.practicamongodb to javafx.fxml;
