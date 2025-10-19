@@ -12,6 +12,8 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ public class CitasDAO {
     private MongoClient mongoClient;
     private MongoDatabase database;
     private MongoCollection<Document> citasCollection;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public CitasDAO() {
     }
@@ -41,13 +44,38 @@ public class CitasDAO {
     }
 
     public void guardarCita(Cita cita) {
-        Document citaDoc = new Document()
-                .append("_id", cita.getId())
-                .append("fecha", new Date(cita.getFecha()))
-                .append("idPaciente", cita.getIdPaciente())
-                .append("idEspecialidad", cita.getIdEspecialidad());
+        try {
+            // Generar un nuevo ID si no tiene uno asignado
+            if (cita.getId() <= 0) {
+                Document maxIdDoc = citasCollection.find().sort(new Document("_id", -1)).first();
+                int nextId = 1;
+                if (maxIdDoc != null) {
+                    nextId = maxIdDoc.getInteger("_id", 0) + 1;
+                }
+                cita.setId(nextId);
+            }
 
-        citasCollection.insertOne(citaDoc);
+            // Convertir la fecha string a Date para MongoDB
+            Date fechaDate = null;
+            try {
+                if (cita.getFecha() != null && !cita.getFecha().isEmpty()) {
+                    fechaDate = dateFormat.parse(cita.getFecha());
+                }
+            } catch (ParseException e) {
+                // Si hay error de parsing, usar fecha actual
+                fechaDate = new Date();
+            }
+
+            Document citaDoc = new Document()
+                    .append("_id", cita.getId())
+                    .append("fecha", cita.getFecha()) // Guardar como string para consistencia
+                    .append("idPaciente", cita.getIdPaciente())
+                    .append("idEspecialidad", cita.getIdEspecialidad());
+
+            citasCollection.insertOne(citaDoc);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar cita: " + e.getMessage(), e);
+        }
     }
 
     public void eliminarCita(Cita cita) {
@@ -57,7 +85,7 @@ public class CitasDAO {
     public void modificarCita(Cita cita) {
         Bson filter = Filters.eq("_id", cita.getId());
         Bson updates = Updates.combine(
-                Updates.set("fecha", new Date(cita.getFecha())),
+                Updates.set("fecha", cita.getFecha()),
                 Updates.set("idPaciente", cita.getIdPaciente()),
                 Updates.set("idEspecialidad", cita.getIdEspecialidad())
         );
@@ -104,11 +132,9 @@ public class CitasDAO {
         Cita cita = new Cita();
         cita.setId(doc.getInteger("_id"));
 
-        // Convertir Date de MongoDB a Timestamp de Java
-        String fechaMongo = doc.getString("fecha");
-        if (fechaMongo != null) {
-            cita.setFecha(fechaMongo);
-        }
+        // Obtener la fecha como string directamente
+        String fechaStr = doc.getString("fecha");
+        cita.setFecha(fechaStr);
 
         cita.setIdPaciente(doc.getInteger("idPaciente"));
         cita.setIdEspecialidad(doc.getInteger("idEspecialidad"));

@@ -251,6 +251,11 @@ public class CitasController implements Initializable {
                 return;
             }
 
+            if (paciente == null) {
+                mostrarError("No hay paciente seleccionado.");
+                return;
+            }
+
             // Crear la nueva cita
             Cita nuevaCita = new Cita();
             nuevaCita.setIdPaciente(paciente.getId());
@@ -272,11 +277,18 @@ public class CitasController implements Initializable {
 
             // Obtener el ID de la especialidad seleccionada
             String nombreEspecialidad = especialidadCombo.getValue();
+            boolean especialidadEncontrada = false;
             for (Especialidad esp : especialidades) {
                 if (esp.getNombreEspecialidad().equals(nombreEspecialidad)) {
                     nuevaCita.setIdEspecialidad(esp.getId());
+                    especialidadEncontrada = true;
                     break;
                 }
+            }
+
+            if (!especialidadEncontrada) {
+                mostrarError("La especialidad seleccionada no es válida.");
+                return;
             }
 
             // Guardar la cita en la base de datos
@@ -292,6 +304,7 @@ public class CitasController implements Initializable {
 
         } catch (Exception e) {
             mostrarError("Error al crear la cita: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
