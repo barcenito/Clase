@@ -1,4 +1,4 @@
-package org.example.basesnorelacionales.Controllers;
+package com.example.practicamongodb.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

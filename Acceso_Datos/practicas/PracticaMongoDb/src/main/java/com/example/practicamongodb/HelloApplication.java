@@ -1,4 +1,4 @@
-package org.example.basesnorelacionales;
+package com.example.practicamongodb;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +15,5 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
