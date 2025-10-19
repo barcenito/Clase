@@ -1,0 +1,26 @@
+[
+  {
+    "_id": 1,
+    "nombreEspecialidad": "Pediatría"
+  },
+  {
+    "_id": 2,
+    "nombreEspecialidad": "Cirugía"
+  },
+  {
+    "_id": 3,
+    "nombreEspecialidad": "Traumatología"
+  },
+  {
+    "_id": 4,
+    "nombreEspecialidad": "Psiquiatría"
+  },
+  {
+    "_id": 5,
+    "nombreEspecialidad": "Cardiología"
+  },
+  {
+    "_id": 6,
+    "nombreEspecialidad": "Dermatología"
+  }
+]

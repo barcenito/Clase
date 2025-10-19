@@ -1,0 +1,42 @@
+[
+  {
+    "_id": 1,
+    "dni": "12345678A",
+    "passwd": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "nombre": "Juan Pérez Gómez",
+    "direccion": "Calle Mayor 15, 28001 Madrid",
+    "telefono": 612345678
+  },
+  {
+    "_id": 2,
+    "dni": "23456789B",
+    "passwd": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "nombre": "María López García",
+    "direccion": "Avenida Libertad 23, 28045 Madrid",
+    "telefono": 623456789
+  },
+  {
+    "_id": 3,
+    "dni": "34567890C",
+    "passwd": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "nombre": "Carlos Martínez Ruiz",
+    "direccion": "Plaza España 7, 28008 Madrid",
+    "telefono": 634567890
+  },
+  {
+    "_id": 4,
+    "dni": "45678901D",
+    "passwd": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "nombre": "Laura Fernández Sanz",
+    "direccion": "Calle Gran Vía 45, 28013 Madrid",
+    "telefono": 645678901
+  },
+  {
+    "_id": 5,
+    "dni": "56789012E",
+    "passwd": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "nombre": "Antonio Rodríguez Díaz",
+    "direccion": "Paseo Castellana 123, 28046 Madrid",
+    "telefono": 656789012
+  }
+]
