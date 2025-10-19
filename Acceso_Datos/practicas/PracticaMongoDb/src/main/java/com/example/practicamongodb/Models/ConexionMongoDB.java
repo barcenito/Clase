@@ -28,8 +28,8 @@ public class ConexionMongoDB {
             String password = properties.getProperty("password");
 
             // Crear string de conexión para MongoDB
-            String connectionString = String.format("mongodb://%s:%s@%s:%s/?authSource=admin",
-                    username, password, host, port);
+            String connectionString = String.format("mongodb://%s:%s@%s:%s/%s?authSource=admin",
+                    username, password, host, port, name);
 
             // Configurar y crear el cliente MongoDB
             MongoClientSettings settings = MongoClientSettings.builder()
