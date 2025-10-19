@@ -50,6 +50,12 @@ public class LoginController {
                     stage.setTitle("Formulario Paciente");
                     stage.setScene(scene);
                     stage.show();
+                    stage.setWidth(800);
+                    stage.setHeight(800);
+
+                    stage.setResizable(false);
+                    // Para asegurar que la ventana se muestre al frente
+                    stage.toFront();
                     //cerramos la ventana de login
                     Stage currentStage = (Stage) loginButton.getScene().getWindow();
                     currentStage.close();
