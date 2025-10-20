@@ -1,6 +1,5 @@
-package com.juan.CRUD_Hibernate_cfg.Util;
-import com.juan.CRUD_Hibernate_cfg.Modelo.Profesor;
-import com.juan.CRUD_Hibernate_cfg.Modelo.Usuario;
+package com.juan.util;
+import com.juan.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -23,8 +22,8 @@ public class HibernateUtil {
 	static {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
-		cfg.addAnnotatedClass(Profesor.class);
-		cfg.addAnnotatedClass(Usuario.class);
+
+		cfg.addAnnotatedClass(User.class);
 		factory = cfg.buildSessionFactory();
 	}
 	
