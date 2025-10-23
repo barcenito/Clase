@@ -74,6 +74,12 @@ class ProductosDAO():
                     self.file.write(f"{producto.get_nombre()}-{producto.get_precio()}-{producto.get_cantidad()}\n")
                     self.file.flush()
         self.cerrar_conexion()
+    
+    def modificar_producto(self, producto):
+        for idx, prod in enumerate(self.productos):
+            if prod.get_nombre() == producto.get_nombre():
+                self.productos[idx] = producto
+                return
 
     def update_bd(self):
         for producto in self.productos:
@@ -88,7 +94,8 @@ class ProductosController():
             print("1. Agregar Producto")
             print("2. Buscar Producto")
             print("3. Listar Productos")
-            print("4. Salir")
+            print("4. Modificar Producto")
+            print("5. Salir")
             opcion = input("Seleccione una opción: ")
             if opcion == '1':
                 self.add_producto()
@@ -97,6 +104,8 @@ class ProductosController():
             elif opcion == '3':
                 self.listar_productos()
             elif opcion == '4':
+                self.modificar_producto()
+            elif opcion == '5':
                 print("Saliendo del programa.")
                 self.dao.update_bd()
                 break
@@ -124,6 +133,7 @@ class ProductosController():
             print(f"Producto encontrado: {producto.get_nombre()}, Precio: {producto.get_precio()}, Cantidad: {producto.get_cantidad()}")
         else:
             print("Producto no encontrado.")
+    def modificar_producto(self):
 
 if __name__ == "__main__":
     controller = ProductosController()
