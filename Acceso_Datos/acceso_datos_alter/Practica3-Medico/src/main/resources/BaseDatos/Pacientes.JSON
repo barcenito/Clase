@@ -1,0 +1,82 @@
+[
+  {
+    "emailID": "carlos@gmail.com",
+    "DNI": "71188856R",
+    "nombre": "Carlos",
+    "pass": "carlos",
+    "direccion": "c/Cortada n3",
+    "telefono": "623845672"
+  },
+  {
+    "emailID": "maria@gmail.com",
+    "DNI": "52900473H",
+    "nombre": "María",
+    "pass": "maria",
+    "direccion": "Av. Libertad 45",
+    "telefono": "612334567"
+  },
+  {
+    "emailID": "jose@gmail.com",
+    "DNI": "83529104L",
+    "nombre": "José",
+    "pass": "jose",
+    "direccion": "c/Mayor 12",
+    "telefono": "634556789"
+  },
+  {
+    "emailID": "lucia@gmail.com",
+    "DNI": "74219835M",
+    "nombre": "Lucía",
+    "pass": "lucia",
+    "direccion": "c/Colón 89",
+    "telefono": "654123987"
+  },
+  {
+    "emailID": "antonio@gmail.com",
+    "DNI": "61983725Z",
+    "nombre": "Antonio",
+    "pass": "antonio",
+    "direccion": "Plaza España 3",
+    "telefono": "622789345"
+  },
+  {
+    "emailID": "laura@gmail.com",
+    "DNI": "98321745B",
+    "nombre": "Laura",
+    "pass": "laura",
+    "direccion": "c/Sevilla 77",
+    "telefono": "699223344"
+  },
+  {
+    "emailID": "javier@gmail.com",
+    "DNI": "71593284F",
+    "nombre": "Javier",
+    "pass": "javier",
+    "direccion": "Av. Andalucía 102",
+    "telefono": "633445566"
+  },
+  {
+    "emailID": "elena@gmail.com",
+    "DNI": "85219473D",
+    "nombre": "Elena",
+    "pass": "elena",
+    "direccion": "c/Granada 15",
+    "telefono": "611778899"
+  },
+  {
+    "emailID": "miguel@gmail.com",
+    "DNI": "79138462T",
+    "nombre": "Miguel",
+    "pass": "miguel",
+    "direccion": "c/Sol 5",
+    "telefono": "624112233"
+  },
+  {
+    "emailID": "ana@gmail.com",
+    "DNI": "63429175K",
+    "nombre": "Ana",
+    "pass": "ana",
+    "direccion": "Av. de la Paz 66",
+    "telefono": "688990011"
+  }
+]

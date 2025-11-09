@@ -1,0 +1,102 @@
+[
+  {
+    "fecha": "2025-10-15",
+    "idEspecialidad": 1,
+    "emailIDPaciente": "carlos@gmail.com"
+  },
+  {
+    "fecha": "2025-10-16",
+    "idEspecialidad": 3,
+    "emailIDPaciente": "maria@gmail.com"
+  },
+  {
+    "fecha": "2025-10-17",
+    "idEspecialidad": 2,
+    "emailIDPaciente": "jose@gmail.com"
+  },
+  {
+    "fecha": "2025-10-20",
+    "idEspecialidad": 5,
+    "emailIDPaciente": "lucia@gmail.com"
+  },
+  {
+    "fecha": "2025-10-22",
+    "idEspecialidad": 4,
+    "emailIDPaciente": "antonio@gmail.com"
+  },
+  {
+    "fecha": "2025-10-25",
+    "idEspecialidad": 2,
+    "emailIDPaciente": "laura@gmail.com"
+  },
+  {
+    "fecha": "2025-10-27",
+    "idEspecialidad": 3,
+    "emailIDPaciente": "javier@gmail.com"
+  },
+  {
+    "fecha": "2025-10-29",
+    "idEspecialidad": 1,
+    "emailIDPaciente": "elena@gmail.com"
+  },
+  {
+    "fecha": "2025-11-02",
+    "idEspecialidad": 4,
+    "emailIDPaciente": "miguel@gmail.com"
+  },
+  {
+    "fecha": "2025-11-04",
+    "idEspecialidad": 5,
+    "emailIDPaciente": "ana@gmail.com"
+  },
+  {
+    "fecha": "2025-11-10",
+    "idEspecialidad": 2,
+    "emailIDPaciente": "carlos@gmail.com"
+  },
+  {
+    "fecha": "2025-11-12",
+    "idEspecialidad": 3,
+    "emailIDPaciente": "maria@gmail.com"
+  },
+  {
+    "fecha": "2025-11-14",
+    "idEspecialidad": 5,
+    "emailIDPaciente": "jose@gmail.com"
+  },
+  {
+    "fecha": "2025-11-15",
+    "idEspecialidad": 1,
+    "emailIDPaciente": "lucia@gmail.com"
+  },
+  {
+    "fecha": "2025-11-18",
+    "idEspecialidad": 4,
+    "emailIDPaciente": "antonio@gmail.com"
+  },
+  {
+    "fecha": "2025-11-20",
+    "idEspecialidad": 3,
+    "emailIDPaciente": "laura@gmail.com"
+  },
+  {
+    "fecha": "2025-11-22",
+    "idEspecialidad": 5,
+    "emailIDPaciente": "javier@gmail.com"
+  },
+  {
+    "fecha": "2025-11-25",
+    "idEspecialidad": 2,
+    "emailIDPaciente": "elena@gmail.com"
+  },
+  {
+    "fecha": "2025-11-27",
+    "idEspecialidad": 1,
+    "emailIDPaciente": "miguel@gmail.com"
+  },
+  {
+    "fecha": "2025-11-30",
+    "idEspecialidad": 4,
+    "emailIDPaciente": "ana@gmail.com"
+  }
+]

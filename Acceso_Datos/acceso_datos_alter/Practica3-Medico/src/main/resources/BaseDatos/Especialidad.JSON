@@ -1,0 +1,22 @@
+[
+  {
+    "idEspecialidad": 1,
+    "tipo": "Cirugía"
+  },
+  {
+    "idEspecialidad": 2,
+    "tipo": "Pediatría"
+  },
+  {
+    "idEspecialidad": 3,
+    "tipo": "Cardiología"
+  },
+  {
+    "idEspecialidad": 4,
+    "tipo": "Oftalmología"
+  },
+  {
+    "idEspecialidad": 5,
+    "tipo": "Dermatología"
+  }
+]

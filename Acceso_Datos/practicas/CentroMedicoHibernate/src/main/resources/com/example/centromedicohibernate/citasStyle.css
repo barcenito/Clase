@@ -1,0 +1,65 @@
+/* Estilos generales */
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-background-color: #f0f0f0;
+}
+
+/* Estilos para HBox de secciones */
+HBox {
+    -fx-background-color: #D3D3D3;
+    -fx-background-radius: 20;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+/* Estilos para etiquetas */
+Label {
+    -fx-font-weight: bold;
+}
+
+/* Estilos para campos de texto */
+TextField, DatePicker, ComboBox {
+    -fx-background-radius: 5;
+    -fx-border-color: #A0A0A0;
+    -fx-border-radius: 5;
+    -fx-focus-color: #2f4c6e;
+}
+
+/* Estilos para botones */
+Button {
+    -fx-background-color: #2f4c6e;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 30;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: #3f5c8a;
+}
+
+/* Estilo para la tabla */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #A0A0A0;
+    -fx-border-radius: 5;
+}
+
+.table-view .column-header {
+    -fx-background-color: #2f4c6e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Estilo para filas seleccionadas */
+.table-row-cell:selected {
+    -fx-background-color: #a5d8ff;
+}
+
+/* Título de las citas del paciente */
+#citasPacienteLabel {
+    -fx-text-fill: #2f4c6e;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
