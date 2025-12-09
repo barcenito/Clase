@@ -1,6 +1,10 @@
-from pewee import *
-db = SqliteDatabase('gestion.db')
-class Tarea(Model):
-	descripcion = CharField()
-	def Meta():
-		database = db
+from peewee import *
+from database.database import BaseModel
+
+
+class Tarea(BaseModel):
+    titulo = CharField(unique=True)
+    descripcion = TextField()
+
+    def __str__(self):
+        return self.titulo
